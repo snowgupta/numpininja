@@ -1,0 +1,52 @@
+package selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+//import org.openqa.selenium.interactions.Actions;
+
+public class assignment2bengal {
+	
+	
+	public static void collectDataFromWebsite() throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:/Users/snowg/eclipse-workspace/HelloSelenium/src/test/resources/driver/chromedriver.exe");
+		
+		WebDriver driver = new ChromeDriver();
+		
+		driver.get ("https://westbengal.covidsafe.in/");
+		int numberOfHospitals= driver.findElements(By.xpath("//tr[@ style]")).size();
+		System.out.println("numberOfHospitals" +numberOfHospitals);
+		
+		
+		for (int i=1; i<=numberOfHospitals; i++ )
+		{
+			//System.out.println("\n"+i+")");
+			String hospitalName = driver.findElement(By.xpath("//tr[@style]["+i+"]//button//strong")).getText().replace("Contact", " ");
+			System.out.println(hospitalName);
+			
+	
+			String oxBeds = driver.findElement(By.xpath("//tr[@ style ='cursor: pointer;']["+i+"]//td[3]//span[1]/span")).getText();
+			System.out.println(" oxygen beds " +oxBeds);
+	
+		
+			String VacantBeds = driver.findElement(By.xpath("//tr[@ style ='cursor: pointer;']["+i+"]//td[4]//span[1]//span")).getText();
+			System.out.println("ventilator beds available " +VacantBeds);
+		Thread.sleep(1000);
+		
+			driver.findElement (By.xpath ("//tr[@style ='cursor: pointer;'][1]//button")).click();
+		Thread.sleep(500);
+		String ph=driver.findElement(By.xpath("//tr[@ class = 'border-bottom']//p[2]/span")).getText();
+		System.out.println("PhoneNo " +ph);	
+		driver.findElement (By.xpath ("//tr[@style ='cursor: pointer;'][1]//button")).click();
+		
+		
+		}
+}
+	public static void main(String[] args) throws InterruptedException {
+		
+		collectDataFromWebsite();
+	
+}
+
+}
